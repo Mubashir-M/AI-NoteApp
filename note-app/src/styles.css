@@ -1,0 +1,56 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f3f3f3;
+  margin: 0;
+}
+
+.toolbar-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f3f3f3;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+select {
+  padding: 5px; /* Add some padding to select */
+  border-radius: 4px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border for select */
+}
+
+.tiptap-container {
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+.tiptap {
+  outline: none;
+  width: 8.5in;
+  min-height: 11in;
+  padding: 1in;
+  margin: 1rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  background-color: white;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  color: black;
+  border-radius: 4px; /* Rounded corners for buttons */
+}
+
+button.is-active {
+  background-color: #0056b3; /* Darker shade when active */
+}
