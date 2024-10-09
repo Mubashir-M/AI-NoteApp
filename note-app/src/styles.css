@@ -32,6 +32,8 @@ select {
   border: none;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 .tiptap {
@@ -39,7 +41,7 @@ select {
   width: 8.5in;
   min-height: 11in;
   padding: 1in;
-  margin: 1rem;
+  margin: 1rem auto;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   background-color: white;
 }

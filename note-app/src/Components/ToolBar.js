@@ -5,6 +5,9 @@ import TextColorSelector from "./TextColorSelector";
 import HighlightColorSelector from "./HighlightColorSelector";
 import HeadingSelector from "./HeadingSelector";
 import FontFamilySelector from "./FontFamilySelector";
+import TextFormattingButtons from "./TextFormattingButtons";
+import LinkSelector from "./LinkSelector";
+import StrikeSelector from "./StrikeSelector";
 
 export default function ToolBar({ editor }) {
   const [fontSize, setFontSize] = useState("16");
@@ -62,36 +65,14 @@ export default function ToolBar({ editor }) {
       <div className="vertical-line" />
       <FontFamilySelector editor={editor} />
       <div className="vertical-line" />
-      {/* Bold, Italic, and Underline buttons */}
-      <button
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        className={editor.isActive("bold") ? "is-active" : ""}
-        title="Bold"
-      >
-        <i className="fas fa-bold"></i>
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? "is-active" : ""}
-        title="Italic"
-      >
-        <i className="fas fa-italic"></i>
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className={editor.isActive("underline") ? "is-active" : ""}
-        title="Underline"
-      >
-        <i className="fas fa-underline"></i>
-      </button>
 
+      <TextFormattingButtons editor={editor} />
       <TextColorSelector
         textColor={textColor}
         colorPickerRef={colorPickerRef}
         onHandleColorChange={handleColorChange}
         onToggleColorPicker={toggleColorPicker}
       />
-      <div className="vertical-line" />
 
       <HighlightColorSelector
         highlightColor={highlightColor}
@@ -99,6 +80,11 @@ export default function ToolBar({ editor }) {
         onHandleHighlightChange={handleHighlightChange}
         onToggleHighlightPicker={toggleHighlightPicker}
       />
+
+      <div className="vertical-line" />
+      <LinkSelector editor={editor} />
+      <StrikeSelector editor={editor} />
+      <div className="vertical-line" />
 
       <TextAlignmentSelector
         currentAlignment={currentAlignment}
@@ -109,10 +95,6 @@ export default function ToolBar({ editor }) {
 }
 
 /* 
-Continue to refactor menu items to their own components.
-font family
-line spacing
-link
-Strike
-text style or font family
+character count
+name of the file top left
 */

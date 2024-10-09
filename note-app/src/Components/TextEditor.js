@@ -4,8 +4,8 @@ import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Highlight from "@tiptap/extension-highlight";
 import Text from "@tiptap/extension-text";
-import Bold from "@tiptap/extension-bold"; // Import bold extension
-import Italic from "@tiptap/extension-italic"; // Import italic extension
+import Bold from "@tiptap/extension-bold";
+import Italic from "@tiptap/extension-italic";
 import Underline from "@tiptap/extension-underline";
 import TextStyle from "@tiptap/extension-text-style";
 import ToolBar from "./ToolBar";
@@ -14,11 +14,14 @@ import TextColor from "../Extensions/TextColor";
 import TextAlign from "@tiptap/extension-text-align";
 import Heading from "@tiptap/extension-heading";
 import FontFamily from "@tiptap/extension-font-family";
+import Strike from "@tiptap/extension-strike";
+import Link from "@tiptap/extension-link";
+import CharacterCount from "@tiptap/extension-character-count";
+
+const limit = 280;
 
 export default function TextEditor() {
   const wrapperRef = useRef();
-
-  // Initialize the Tiptap editor
   const editor = useEditor({
     extensions: [
       Document,
@@ -31,6 +34,16 @@ export default function TextEditor() {
       FontSize,
       TextColor,
       FontFamily,
+      Strike,
+      Link.configure({
+        openOnClick: true,
+        autolink: true,
+        defaultProtocol: "https",
+        HTMLAttributes: {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        },
+      }),
       Highlight.configure({ multicolor: true }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
@@ -38,8 +51,11 @@ export default function TextEditor() {
       Heading.configure({
         levels: [1, 2, 3, 4, 5, 6],
       }),
-    ], // Added text formatting extensions
-    content: "<p>Hello World! 🎉Yippiii</p>", // Initial content
+      CharacterCount.configure({
+        limit,
+      }),
+    ],
+    content: "<p>Hello World! 🎉Yippiii</p>",
     onUpdate: ({ editor }) => {
       // Handle updates, if necessary...
     },
@@ -51,14 +67,13 @@ export default function TextEditor() {
 
   return (
     <div className="container" ref={wrapperRef}>
-      <ToolBar editor={editor} /> {/* Pass the editor to the toolbar */}
+      <ToolBar editor={editor} />
       <div className="tiptap-container">
         <EditorContent
           className="text-container"
           editor={editor}
-          onClick={() => editor.commands.focus()} // Make the editor focus on click
-        />{" "}
-        {/* Render the Tiptap editor */}
+          onClick={() => editor.commands.focus()}
+        />
       </div>
     </div>
   );
