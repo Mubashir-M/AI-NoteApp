@@ -18,10 +18,14 @@ import Strike from "@tiptap/extension-strike";
 import Link from "@tiptap/extension-link";
 import CharacterCount from "@tiptap/extension-character-count";
 import { io } from "socket.io-client";
+import { useParams } from "react-router-dom";
+
 const limit = 280;
 
 export default function TextEditor() {
-  const [socket, setSocket] = useState();
+  const { id: documentId } = useParams();
+  const [socket, setSocket] = useState(null);
+
   const wrapperRef = useRef();
 
   const editor = useEditor({
@@ -57,11 +61,11 @@ export default function TextEditor() {
         limit,
       }),
     ],
-    content: "<p>Hello World! 🎉Yippiii</p>",
+    content: "<p>Hello World! 🎉Yippiii</p>", // Initial content
     onUpdate: ({ editor }) => {
-      const newText = editor.getHTML(); // Get the HTML instead of plain text
+      const newText = editor.getHTML(); // Get the HTML format
       if (socket) {
-        socket.emit("send-changes", { newText }); // Emit changes to the server
+        socket.emit("send-changes", { id: documentId, changes: newText }); // Emit changes to the server
       }
     },
   });
@@ -73,19 +77,28 @@ export default function TextEditor() {
 
     s.on("connect", () => {
       console.log("Connected to the server");
+      s.emit("join-document", documentId); // Join the document room
+      s.emit("load-document", documentId); // Load the document
     });
 
-    // Listen for changes from the other clients
-    s.on("receive-changes", (data) => {
-      if (editor && data.newText !== editor.getHTML()) {
-        editor.commands.setContent(data.newText, false); // Update the editor with new content
+    // Listen for changes from other clients
+    s.on("receive-changes", (newText) => {
+      if (editor && newText !== editor.getHTML()) {
+        editor.commands.setContent(newText, false); // Update editor with new content
+      }
+    });
+
+    // Listen for the loaded document
+    s.on("load-document", (document) => {
+      if (editor) {
+        editor.commands.setContent(document.data, false); // Load document data into the editor
       }
     });
 
     return () => {
       s.disconnect();
     };
-  }, [editor]); // Add 'editor' as a dependency
+  }, [editor, documentId]); // Re-run when 'editor' or 'documentId' changes
 
   if (!editor) {
     return null;
