@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import axios from "axios";
 import { useEditor, EditorContent } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
@@ -25,7 +26,7 @@ const limit = 280;
 export default function TextEditor() {
   const { id: documentId } = useParams();
   const [socket, setSocket] = useState(null);
-
+  const [currentDocument, setCurrentDocument] = useState(null);
   const wrapperRef = useRef();
 
   const editor = useEditor({
@@ -70,7 +71,7 @@ export default function TextEditor() {
     },
   });
 
-  // useEffect for connecting to socket
+  // Socket connection and event handling
   useEffect(() => {
     const s = io("http://localhost:3001");
     setSocket(s);
@@ -81,14 +82,12 @@ export default function TextEditor() {
       s.emit("load-document", documentId); // Load the document
     });
 
-    // Listen for changes from other clients
     s.on("receive-changes", (newText) => {
       if (editor && newText !== editor.getHTML()) {
         editor.commands.setContent(newText, false); // Update editor with new content
       }
     });
 
-    // Listen for the loaded document
     s.on("load-document", (document) => {
       if (editor) {
         editor.commands.setContent(document.data, false); // Load document data into the editor
@@ -96,24 +95,54 @@ export default function TextEditor() {
     });
 
     return () => {
+      s.off("receive-changes");
+      s.off("load.document");
       s.disconnect();
     };
-  }, [editor, documentId]); // Re-run when 'editor' or 'documentId' changes
+  }, [editor, documentId]);
+
+  // Fetch document on mount or when documentId changes
+  useEffect(() => {
+    const fetchDocument = async () => {
+      if (!documentId) return;
+
+      try {
+        console.log("Fetching document with documentId: ", documentId);
+        const response = await axios.get(
+          `http://localhost:3001/api/documents/${documentId}`
+        );
+        setCurrentDocument(response.data);
+        if (editor) {
+          editor.commands.setContent(response.data.content);
+        }
+      } catch (error) {
+        console.error("Error fetching document from TextEditor.js:", error);
+      }
+    };
+
+    fetchDocument();
+  }, [documentId, editor]);
 
   if (!editor) {
-    return null;
+    return null; // Render nothing until editor is ready
   }
 
   return (
     <div className="container" ref={wrapperRef}>
-      <ToolBar editor={editor} />
-      <div className="tiptap-container">
-        <EditorContent
-          className="text-container"
-          editor={editor}
-          onClick={() => editor.commands.focus()}
-        />
-      </div>
+      {currentDocument ? (
+        <>
+          <ToolBar editor={editor} />
+          <div className="tiptap-container">
+            <EditorContent
+              className="text-container"
+              editor={editor}
+              onClick={() => editor.commands.focus()}
+            />
+          </div>
+        </>
+      ) : (
+        <p>Loading document...</p> // Optional loading state
+      )}
     </div>
   );
 }

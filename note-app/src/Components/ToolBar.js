@@ -8,6 +8,7 @@ import FontFamilySelector from "./FontFamilySelector";
 import TextFormattingButtons from "./TextFormattingButtons";
 import LinkSelector from "./LinkSelector";
 import StrikeSelector from "./StrikeSelector";
+import { useNavigate } from "react-router-dom";
 
 export default function ToolBar({ editor }) {
   const [fontSize, setFontSize] = useState("16");
@@ -15,6 +16,8 @@ export default function ToolBar({ editor }) {
   const [highlightColor, setHighlightColor] = useState(""); // Default highlight color is none
   const colorPickerRef = useRef(null);
   const highlightPickerRef = useRef(null);
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [currentAlignment, setCurrentAlignment] = useState("left");
 
@@ -53,9 +56,15 @@ export default function ToolBar({ editor }) {
     setCurrentAlignment(alignment); // Update the current alignment state
   };
 
+  const handleBackToFrontPage = () => {
+    navigate("/"); // Navigate back to the front page
+  };
+
   return (
     <div className="toolbar-container">
       <div className="vertical-line" />
+      <button onClick={handleBackToFrontPage}>Back to Front Page</button>{" "}
+      {/* Back navigation button */}
       <HeadingSelector editor={editor} />
       <div className="vertical-line" />
       <FontSizeSelector
@@ -65,7 +74,6 @@ export default function ToolBar({ editor }) {
       <div className="vertical-line" />
       <FontFamilySelector editor={editor} />
       <div className="vertical-line" />
-
       <TextFormattingButtons editor={editor} />
       <TextColorSelector
         textColor={textColor}
@@ -73,19 +81,16 @@ export default function ToolBar({ editor }) {
         onHandleColorChange={handleColorChange}
         onToggleColorPicker={toggleColorPicker}
       />
-
       <HighlightColorSelector
         highlightColor={highlightColor}
         highlightPickerRef={highlightPickerRef}
         onHandleHighlightChange={handleHighlightChange}
         onToggleHighlightPicker={toggleHighlightPicker}
       />
-
       <div className="vertical-line" />
       <LinkSelector editor={editor} />
       <StrikeSelector editor={editor} />
       <div className="vertical-line" />
-
       <TextAlignmentSelector
         currentAlignment={currentAlignment}
         setAlignment={setAlignment}
