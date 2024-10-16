@@ -31,7 +31,7 @@ export default function FrontPage({ onOpenDocument, onCreateNew }) {
           {documents.map((doc) => (
             <li key={doc._id}>
               <button onClick={() => openDocument(doc._id)}>
-                Open Document {doc._id}
+                Open Document {doc.title}
               </button>
             </li>
           ))}

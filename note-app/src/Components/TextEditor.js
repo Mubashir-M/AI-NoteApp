@@ -17,11 +17,8 @@ import Heading from "@tiptap/extension-heading";
 import FontFamily from "@tiptap/extension-font-family";
 import Strike from "@tiptap/extension-strike";
 import Link from "@tiptap/extension-link";
-import CharacterCount from "@tiptap/extension-character-count";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
-
-const limit = 280;
 
 export default function TextEditor() {
   const { id: documentId } = useParams();
@@ -57,9 +54,6 @@ export default function TextEditor() {
       }),
       Heading.configure({
         levels: [1, 2, 3, 4, 5, 6],
-      }),
-      CharacterCount.configure({
-        limit,
       }),
     ],
     content: "<p>Hello World! 🎉Yippiii</p>", // Initial content
