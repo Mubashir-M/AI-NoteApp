@@ -117,3 +117,33 @@ button.is-active {
 .alignment-menu button:hover {
   background-color: #f0f0f0; /* Change background on hover */
 }
+
+.document-name-input {
+  margin: none;
+  padding: none;
+  background-color: #f3f3f3;
+  border: none;
+}
+
+.document-name-input:focus {
+  border-bottom: 1px solid #1a73e8; /* Blue underline on focus */
+  background-color: white;
+}
+
+.document-name-input:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.create-new-document-button {
+  margin-left: 3rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.create-new-document-button:hover {
+  border: 1px solid lightblue;
+  background-color: white;
+}

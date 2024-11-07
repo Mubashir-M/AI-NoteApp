@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import axios from "axios";
 import FontSizeSelector from "./FontSizeSelector";
 import TextAlignmentSelector from "./TextAlignmentSelector";
 import TextColorSelector from "./TextColorSelector";
@@ -8,18 +9,22 @@ import FontFamilySelector from "./FontFamilySelector";
 import TextFormattingButtons from "./TextFormattingButtons";
 import LinkSelector from "./LinkSelector";
 import StrikeSelector from "./StrikeSelector";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function ToolBar({ editor }) {
+export default function ToolBar({ editor, currentDocument }) {
   const [fontSize, setFontSize] = useState("16");
   const [textColor, setTextColor] = useState("#000000"); // Default color is black
   const [highlightColor, setHighlightColor] = useState(""); // Default highlight color is none
   const colorPickerRef = useRef(null);
   const highlightPickerRef = useRef(null);
+  const { id: documentId } = useParams();
 
   const navigate = useNavigate(); // Initialize useNavigate
 
   const [currentAlignment, setCurrentAlignment] = useState("left");
+  const [documentName, setDocumentName] = useState(
+    currentDocument?.title || "Untitled Document"
+  );
 
   const handleFontSizeChange = (e) => {
     const size = Number(e.target.value);
@@ -60,10 +65,35 @@ export default function ToolBar({ editor }) {
     navigate("/"); // Navigate back to the front page
   };
 
+  const handleDocumentNameChange = async (e) => {
+    const newTitle = e.target.value;
+    setDocumentName(newTitle);
+
+    try {
+      await axios.put(
+        `http://localhost:3001/api/documents/${documentId}/title`,
+        {
+          title: newTitle,
+        }
+      );
+    } catch (error) {
+      console.error("Error updating document title:", error);
+    }
+  };
+
   return (
     <div className="toolbar-container">
+      <button onClick={handleBackToFrontPage}>
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <input
+        type="text"
+        value={documentName}
+        onChange={handleDocumentNameChange}
+        className="document-name-input"
+        placeholder="Enter document name"
+      />
       <div className="vertical-line" />
-      <button onClick={handleBackToFrontPage}>Back to Front Page</button>{" "}
       {/* Back navigation button */}
       <HeadingSelector editor={editor} />
       <div className="vertical-line" />

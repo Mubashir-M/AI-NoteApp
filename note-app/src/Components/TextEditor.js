@@ -125,7 +125,7 @@ export default function TextEditor() {
     <div className="container" ref={wrapperRef}>
       {currentDocument ? (
         <>
-          <ToolBar editor={editor} />
+          <ToolBar editor={editor} currentDocument={currentDocument} />
           <div className="tiptap-container">
             <EditorContent
               className="text-container"

@@ -47,4 +47,27 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Update the document name by ID
+router.put("/:id/title", async (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  try {
+    const updatedDocument = await Document.findByIdAndUpdate(
+      id,
+      { title },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedDocument) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+
+    res.status(200).json(updatedDocument);
+  } catch (error) {
+    console.error("Error updating document title:", error);
+    res.status(500).json({ message: "Error updating document title" });
+  }
+});
+
 module.exports = router;

@@ -23,7 +23,9 @@ export default function FrontPage({ onOpenDocument, onCreateNew }) {
   return (
     <div>
       <h1>Your Documents</h1>
-      <button onClick={onCreateNew}>Create New Document</button>
+      <button className="create-new-document-button" onClick={onCreateNew}>
+        <i class="fa-solid fa-plus"></i>
+      </button>
 
       {/* Conditional rendering to ensure documents are available */}
       {documents.length > 0 ? (
