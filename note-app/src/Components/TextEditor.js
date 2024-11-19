@@ -101,9 +101,16 @@ export default function TextEditor() {
       if (!documentId) return;
 
       try {
-        console.log("Fetching document with documentId: ", documentId);
+        const token = localStorage.getItem("jwtToken"); // Retrieve the token from localStorage
+
+        // Make the GET request with Authorization header
         const response = await axios.get(
-          `http://localhost:3001/api/documents/${documentId}`
+          `http://localhost:3001/api/documents/${documentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Pass the token here
+            },
+          }
         );
         setCurrentDocument(response.data);
         if (editor) {

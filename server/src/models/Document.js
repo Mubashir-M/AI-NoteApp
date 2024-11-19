@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const DocumentSchema = new Schema(
   {
     _id: {
-      type: String, // Specify the type as String for UUID
+      type: String,
       required: true,
     },
     title: {
@@ -14,6 +14,17 @@ const DocumentSchema = new Schema(
       type: Object,
       required: true,
     },
+    ownerId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    sharedWith: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true }
 );

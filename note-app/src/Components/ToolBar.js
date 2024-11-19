@@ -84,7 +84,7 @@ export default function ToolBar({ editor, currentDocument }) {
   return (
     <div className="toolbar-container">
       <button onClick={handleBackToFrontPage}>
-        <i class="fa-solid fa-arrow-left"></i>
+        <i className="fa-solid fa-arrow-left"></i>
       </button>
       <input
         type="text"

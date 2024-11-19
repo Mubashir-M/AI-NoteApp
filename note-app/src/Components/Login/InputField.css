@@ -1,0 +1,88 @@
+.input-wrapper {
+  height: 54px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-field {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  font-size: 1.06rem;
+  border-radius: 0.31rem;
+  border: 1px solid #bfb3f2;
+  padding: 0px 1.25rem 0 3.12rem; /* Adjust padding to make room for the icon */
+  transition: 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: #5f41e4;
+}
+
+.input-field::placeholder {
+  color: #9284c8;
+}
+
+.input-wrapper i {
+  position: absolute;
+  top: 50%;
+  height: 100%;
+  display: flex;
+  color: #a395e0;
+  align-items: center;
+  transform: translateY(-50%);
+  transition: 0.2s ease;
+}
+
+.input-wrapper i:not(.eye-icon) {
+  left: 0.93rem;
+  pointer-events: none;
+}
+
+.input-field:focus ~ i:not(.eye-icon) {
+  color: #5f41e4;
+}
+
+.input-wrapper i.eye-icon {
+  right: 10px; /* Correct placement of the eye icon */
+  color: #917de8;
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: none;
+}
+
+/* Show the eye icon when the input field is valid */
+.input-wrapper .input-field:valid ~ .eye-icon {
+  display: flex;
+}
+
+.forgot-password-link {
+  display: block;
+  width: fit-content;
+  margin-top: -0.44rem;
+}
+
+.login-button {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 54px;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 2.19rem;
+  border-radius: 0.31rem;
+  background: #5f41e4;
+  transition: 0.3s ease;
+}
+
+.login-button:hover {
+  background: #4320df;
+}
+
+/* Add margin to the input field to make room for the icon */
+.input-field {
+  padding-right: 40px; /* Ensure space for the eye icon */
+}

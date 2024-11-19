@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const documentRoutes = require("./routes/documentRoutes");
+const authRoutes = require("./routes/authRoutes");
 const setupSocketIO = require("./socket/socket");
 
 const PORT = process.env.PORT || 3001;
@@ -18,6 +19,7 @@ connectDB(mongoDb_Uri);
 
 // API Routes
 app.use("/api/documents", documentRoutes);
+app.use("/api/auth", authRoutes);
 
 // Create HTTP server and set up Socket.IO
 const server = http.createServer(app);
