@@ -1,0 +1,43 @@
+.document-dropdown {
+  margin-left: 20px;
+  position: relative;
+}
+.fa {
+  background-color: none;
+}
+
+.dropdown-btn {
+  background: none;
+}
+.dropdown-btn:hover {
+  background-color: #f9fafb;
+  border-radius: 20px;
+}
+.document-dropdown .dropdown-btn i.fa-ellipsis-v {
+  color: black;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  list-style-type: none;
+  margin: 0;
+  width: 150px;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.dropdown-menu li {
+  font-size: 12px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}

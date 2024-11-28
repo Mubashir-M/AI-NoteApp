@@ -70,10 +70,20 @@ export default function ToolBar({ editor, currentDocument }) {
     setDocumentName(newTitle);
 
     try {
+      const token = localStorage.getItem("jwtToken");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
       await axios.put(
         `http://localhost:3001/api/documents/${documentId}/title`,
         {
           title: newTitle,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
     } catch (error) {

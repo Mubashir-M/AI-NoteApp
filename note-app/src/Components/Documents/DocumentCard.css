@@ -1,0 +1,29 @@
+.card-container {
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  height: 340px;
+  width: 210px;
+  cursor: pointer;
+}
+
+.card-top {
+  height: 263px;
+  width: 208px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-bottom {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid gray;
+  height: 75px;
+  width: 208px;
+}
+
+.document-title {
+  margin-left: 10px;
+  font-size: 14px;
+}

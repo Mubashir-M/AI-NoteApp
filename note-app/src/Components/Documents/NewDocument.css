@@ -1,0 +1,50 @@
+.new-document-container {
+  background-color: #f9fafb; /* bg-gray-50 */
+  height: 300px; /* h-[300px] */
+  display: flex; /* flex */
+  flex-direction: row; /* flex-row */
+  justify-content: center; /* justify-center */
+  flex-wrap: wrap; /* flex-wrap */
+}
+
+.new-document-elements {
+  display: flex;
+  flex-direction: column;
+  width: 83.33333%;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.start-new-document {
+  color: rgb(32, 33, 36);
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 3.11rem;
+}
+
+.create-new-document-button {
+  height: 150px;
+  width: 118px;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  margin-left: 0; /* Move it to the left */
+  margin-right: auto; /* Remove right margin, so it aligns left */
+}
+
+.new-document {
+  margin-left: 3rem;
+  font-size: 14px;
+  height: 19px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Media Query for Medium Screens and Up (md) */
+@media (min-width: 768px) {
+  .new-document-container {
+    flex-direction: column; /* md:flex-col */
+  }
+}

@@ -68,7 +68,11 @@ const AppRoutes = ({ isAuthenticated, onLogin, onLogOut }) => {
       <Route
         path="/documents/:id"
         element={
-          isAuthenticated ? <TextEditor /> : <Navigate to="/login" replace />
+          isAuthenticated ? (
+            <TextEditor onLogOut={onLogOut} />
+          ) : (
+            <Navigate to="/login" replace />
+          )
         }
       />
     </Routes>
